@@ -34,8 +34,8 @@ bottle-mvc-process-demo
 ---
   因为bottle是单文件的微型python web框架,所以只需要从bottle官网下载bottle.py并替换project目录下的bottle.py即可.  
   升级bottle后  
-    1.原有demo中的view模板(.tpl文件)可能需要根据新版bottle语法进行更新.  
-    2.原有的demo api 可能由于语法变更而失效,删除皆可  
+      1.原有demo中的view模板(.tpl文件)可能需要根据新版bottle语法进行更新.  
+      2.原有的demo api 可能由于语法变更而失效,删除皆可  
 
 文档
 ---
