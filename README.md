@@ -4,13 +4,14 @@
 ---
   基于bottle
 
-
-###环境需求
--python2.7
-
-###文档
+### 环境需求
 ---
+  -python2.7
 
-###License
+### 文档
 ---
-MIT license. 
+  参见http://www.bottlepy.org/docs/dev/index.html
+
+### License
+---
+  MIT license. 
