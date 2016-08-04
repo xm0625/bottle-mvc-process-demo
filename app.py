@@ -70,11 +70,12 @@ def start_httpd(host, port):
     th.setDaemon(True)
     th.start()
     print('Started httpd %s' % port)
-    try:
-        while th.isAlive():
-            pass
-    except KeyboardInterrupt:
-        print('stopped by keyboard')
+    th.join()
+    # try:
+    #     while th.isAlive():
+    #         pass
+    # except KeyboardInterrupt:
+    #     print('stopped by keyboard')
 
 
 
