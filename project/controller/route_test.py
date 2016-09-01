@@ -60,3 +60,23 @@ def do_upload():
 def hello_to_somebody():
     username = request.params.get('username')
     return {"greeting": route_test_service.get_greeting_words(username)}
+
+
+@app.route('/api/books', method=['GET', 'POST'])
+@global_exception_handler
+@allow_cross_domain
+@response_json
+def get_all_books():
+    return {"books": route_test_service.get_all_books()}
+
+
+@app.route('/api/addBook', method=['GET', 'POST'])
+@global_exception_handler
+@allow_cross_domain
+@response_json
+def add_books():
+    title = request.params.get('book.title')
+    author = request.params.get('book.author')
+    published = request.params.get('book.published')
+    route_test_service.add_books(title, author, published)
+    return ""

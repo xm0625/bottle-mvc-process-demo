@@ -5,7 +5,7 @@ import sys
 import os
 from bottle import Bottle, TEMPLATE_PATH
 
-app = Bottle()
+app = Bottle(autojson=False)
 app_root_path = sys.path[0]
 TEMPLATE_PATH.append(os.path.join(app_root_path, "project", "views"))
 TEMPLATE_PATH.remove("./views/")

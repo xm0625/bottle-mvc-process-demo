@@ -3,6 +3,7 @@
 
 # 解决py2.7中文出现write错误的问题
 import sys
+
 reload(sys)
 sys.setdefaultencoding('utf-8')
 # 解决py2.7中文出现write错误的问题 #
@@ -10,10 +11,11 @@ sys.setdefaultencoding('utf-8')
 # 从wsgiref模块导入:
 from wsgiref.simple_server import make_server, WSGIServer, WSGIRequestHandler, ServerHandler
 from processPool.PooledProcessMixIn import PooledProcessMixIn
-from threading import Thread
+import threading
 import os
 from project import app
 from project.bottle import debug, run
+from project.sqlite_manager import sqlite_manager_server
 
 debug(True)
 
@@ -66,20 +68,23 @@ def start_httpd(host, port):
 
     httpd_server = make_server(host, port, app, server_class=ProcessPoolWSGIServer,
                                handler_class=FixedWSGIRequestHandler)
-    th = Thread(target=httpd_server.serve_forever)
-    th.setDaemon(True)
-    th.start()
     print('Started httpd %s' % port)
-    th.join()
-    # try:
-    #     while th.isAlive():
-    #         pass
-    # except KeyboardInterrupt:
-    #     print('stopped by keyboard')
+    httpd_server.serve_forever()
 
 
 
 if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 8080))
-    start_httpd("0.0.0.0", 8000)
+    httpd_thread = threading.Thread(target=start_httpd, args=("0.0.0.0", 8000,))
+    httpd_thread.setDaemon(True)
+    httpd_thread.start()
+    print("httpd_thread started.")
+
+    sqlite_manager_thread = threading.Thread(target=sqlite_manager_server.run, args=("127.0.0.1", 50001, "123456",))
+    sqlite_manager_thread.setDaemon(True)
+    sqlite_manager_thread.start()
+    print("sqlite_manager_thread started.")
+    sqlite_manager_thread.join()
+
+    httpd_thread.join()
+    # port = int(os.environ.get("PORT", 8080))
     # run(app, reloader=True, interval=1, host='0.0.0.0', port=port)
