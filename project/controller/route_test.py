@@ -18,28 +18,30 @@ def hello():
 
 @app.route('/api/corTest', method=['GET', 'POST'])
 @allow_cross_domain
+@response_json
 def cor_test():
     return {"hello": "world"}
 
 
 @app.route('/api/exceptionTest', method=['GET', 'POST'])
-@global_exception_handler
 @allow_cross_domain
 @response_json
+@global_exception_handler
 def exception_test():
     raise CommonException()
     return {"hello": "world"}
 
 
 @app.route('/uploadTest', method='GET')
+@response_json
 def do_upload():
     return template('upload/form', message='')
 
 
 @app.route('/upload', method='POST')
-@global_exception_handler
 @allow_cross_domain
 @response_json
+@global_exception_handler
 def do_upload():
     category = request.params.get('category')
     upload_file = request.files.get('upload')
@@ -54,9 +56,9 @@ def do_upload():
 
 
 @app.route('/api/helloTo', method=['GET', 'POST'])
-@global_exception_handler
 @allow_cross_domain
 @response_json
+@global_exception_handler
 def hello_to_somebody():
     username = request.params.get('username')
     return {"greeting": route_test_service.get_greeting_words(username)}
@@ -71,9 +73,9 @@ def get_all_books():
 
 
 @app.route('/api/addBook', method=['GET', 'POST'])
-@global_exception_handler
 @allow_cross_domain
 @response_json
+@global_exception_handler
 def add_books():
     title = request.params.get('book.title')
     author = request.params.get('book.author')
